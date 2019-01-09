@@ -4,16 +4,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/rice', function() {
-	return view('layouts.login');
-});
-
 Auth::routes();
 
-//Route::get('home', 'HomeController@index')->name('home');
-
-Route::get('login/microsoft', 'OfficialAccountController@redirectToProvider')->name('ncdmb.login');
-Route::get('graph/microsoft/users', 'OfficialAccountController@getProviderRedirect')->name('get.users');
 Route::get('login/microsoft/callback', 'OfficialAccountController@handleProviderCallback');
 Route::get('graph/users/callback', 'OfficialAccountController@handleGraphCallback');
 
