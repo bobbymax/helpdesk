@@ -85,7 +85,7 @@
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                   <a class="dropdown-item" href="{{ route('admin.ticket.edit', $ticket->id) }}"><i class="fas fa-edit"></i> Assign</a>
                   @if($ticket->assigned_to !== null)
-                    <a class="dropdown-item" href="{{ route('admin.ticket.update', $ticket->id) }}"><i class="fas fa-bell"></i> Resolve</a>
+                    <a class="dropdown-item" href="{{ route('ticket.report', $ticket->id) }}"><i class="fas fa-bell"></i> Resolve</a>
                   @endif
                 </div>
               </div>

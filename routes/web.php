@@ -13,13 +13,18 @@ Auth::routes();
 //Route::get('home', 'HomeController@index')->name('home');
 
 Route::get('login/microsoft', 'OfficialAccountController@redirectToProvider')->name('ncdmb.login');
+Route::get('graph/microsoft/users', 'OfficialAccountController@getProviderRedirect')->name('get.users');
 Route::get('login/microsoft/callback', 'OfficialAccountController@handleProviderCallback');
+Route::get('graph/users/callback', 'OfficialAccountController@handleGraphCallback');
 
 Route::prefix('admin')->group(function() {
 
 	Route::resource('directorates', 'DirectorateController');
 	Route::resource('departments', 'DepartmentController');
 	Route::resource('categories', 'CategoryController');
+	Route::get('{ticket}/report', 'ReportController@create')->name('ticket.report');
+	Route::post('{ticket}/report', 'ReportController@store')->name('admin.report.store');
+	//Route::resource('reports', 'ReportController');
 
 	
 	Route::get('/tickets', 'AdminTicketController@index')->name('admin.tickets.index');

@@ -34,4 +34,9 @@ class Admin extends Authenticatable
     {
         return $this->belongsToMany(Ticket::class, 'ticket_user');
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
 }

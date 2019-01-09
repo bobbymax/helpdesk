@@ -46,4 +46,10 @@ return [
         'redirect' => env('AZURE_REDIRECT_URI')
     ],
 
+    'graph' => [
+        'client_id' => env('GRAPH_KEY'),
+        'client_secret' => env('GRAPH_SECRET'),
+        'redirect' => env('GRAPH_REDIRECT_URI')
+    ],
+
 ];

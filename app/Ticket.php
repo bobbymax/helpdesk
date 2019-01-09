@@ -27,4 +27,9 @@ class Ticket extends Model
     {
         return $this->belongsToMany(Admin::class, 'ticket_user');
     }
+
+    public function report()
+    {
+        return $this->hasOne(Report::class);
+    }
 }

@@ -15,6 +15,12 @@ class OfficialAccountController extends Controller
         return Socialite::with('azure')->redirect();
     }
 
+    public function getProviderRedirect()
+    {
+        return Socialite::with('graph')->redirect();
+        //return redirect('https://graph.microsoft.com/v1.0/me/people/');
+    }
+
     public function handleProviderCallback()
     {
 		try {
@@ -29,6 +35,13 @@ class OfficialAccountController extends Controller
 
 		$this->signin($authUser, true);
 		return redirect()->route('user.dashboard');
+    }
+
+    public function handleGraphCallback()
+    {
+        $users = Socialite::driver('graph')->user();
+        
+        dd($users);
     }
 
     protected function signin($user, $status=false)
