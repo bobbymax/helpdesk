@@ -16,7 +16,6 @@ Route::prefix('admin')->group(function() {
 	Route::resource('categories', 'CategoryController');
 	Route::get('{ticket}/report', 'ReportController@create')->name('ticket.report');
 	Route::post('{ticket}/report', 'ReportController@store')->name('admin.report.store');
-	//Route::resource('reports', 'ReportController');
 
 	
 	Route::get('/tickets', 'AdminTicketController@index')->name('admin.tickets.index');
