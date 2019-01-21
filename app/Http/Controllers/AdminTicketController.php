@@ -9,6 +9,8 @@ use HelpDesk\Admin;
 use HelpDesk\Department;
 use HelpDesk\Category;
 use HelpDesk\User;
+use HelpDesk\Mail\TicketAssigned;
+use Mail;
 
 
 class AdminTicketController extends Controller
@@ -20,6 +22,7 @@ class AdminTicketController extends Controller
 
     public function index()
     {
+        //dd('something');
     	$tickets = Ticket::where('resolved', false)->latest()->get();
     	return view('pages.admin.tickets.index', compact('tickets'));
     }
@@ -52,6 +55,7 @@ class AdminTicketController extends Controller
 			$ticket->save();
 
 			flash()->success('Success!!', 'You have successfully assigned this ticket to admin.');
+            Mail::to($ticket->owner->email)->cc("IT@ncdmb.gov.ng")->queue(new TicketAssigned($ticket));
     	} else {
     		flash()->error('Oops!!', 'Something seems to be wrong.');
     	}

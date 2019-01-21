@@ -15,25 +15,31 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('ticket_code')->unique();
+
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
-            $table->integer('department_id')->unsigned();
-            $table->foreign('department_id')
-                  ->references('id')
-                  ->on('departments')
-                  ->onDelete('cascade');
+
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')
                   ->references('id')
                   ->on('categories')
                   ->onDelete('cascade');
-            $table->string('room_no')->nullable();
+
+            $table->integer('issue_id')->unsigned();
+
+            $table->string('issue')->nullable();
+
             $table->text('complain');
+            $table->string('assigned_to')->nullable();
+            $table->string('priority')->default('normal');
+
             $table->boolean('resolved')->default(false);
+            $table->boolean('reopened')->default(false);
             $table->boolean('archived')->default(false);
             $table->timestamps();
         });

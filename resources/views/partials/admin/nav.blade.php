@@ -1,7 +1,7 @@
 <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/index.html">Dashboard</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('user.dashboard') }}">Dashboard</a>
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-0">
@@ -47,17 +47,9 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" 
-                 href="{{ route('logout') }}"
-                 onclick="event.preventDefault();
-                 document.getElementById('logout-form').submit();">
-
+              <a class="dropdown-item" href="{{ route('admin.logout') }}">
                  <i class="ni ni-user-run"></i>
                  <span>Logout</span>
-
-                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                 </form>
               </a>
             </div>
           </li>

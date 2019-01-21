@@ -5,6 +5,7 @@ namespace HelpDesk\Http\Controllers;
 use HelpDesk\Department;
 use Illuminate\Http\Request;
 use HelpDesk\Directorate;
+use HelpDesk\Division;
 
 class DepartmentController extends Controller
 {
@@ -26,7 +27,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::latest()->get();
+        $departments = Department::latest()->paginate(10);
         return view('pages.admin.departments.index', compact('departments'));
     }
 
@@ -38,7 +39,8 @@ class DepartmentController extends Controller
     public function create()
     {
         $directorates = Directorate::latest()->get();
-        return view('pages.admin.departments.create', compact('directorates'));
+        $divisions = Division::latest()->get();
+        return view('pages.admin.departments.create', compact('directorates', 'divisions'));
     }
 
     /**
@@ -50,15 +52,14 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-
             'name' => 'required',
             'abv'  => 'required|unique:departments|max:255',
             'directorate_id' => 'required|integer',
-
         ]);
 
         Department::create([
             'directorate_id' => $request->directorate_id,
+            'division_id' => $request->division_id,
             'name' => $request->name,
             'slug' => slugify($request->name),
             'abv' => $request->abv,
@@ -88,7 +89,8 @@ class DepartmentController extends Controller
     public function edit(Department $department)
     {
         $directorates = Directorate::latest()->get();
-        return view('pages.admin.departments.edit', compact('department', 'directorates'));
+        $divisions = Division::latest()->get();
+        return view('pages.admin.departments.edit', compact('department', 'directorates', 'divisions'));
     }
 
     /**
@@ -111,6 +113,7 @@ class DepartmentController extends Controller
         $department->name = $request->name;
         $department->slug = slugify($request->name);
         $department->directorate_id = $request->directorate_id;
+        $department->division_id = $request->division_id;
         $department->abv = $request->abv;
 
         $department->save();

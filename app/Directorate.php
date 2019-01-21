@@ -12,4 +12,9 @@ class Directorate extends Model
     {
     	return $this->hasMany(Department::class);
     }
+
+    public function divisions()
+    {
+    	return $this->hasMany(Division::class);
+    }
 }

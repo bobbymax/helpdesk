@@ -1,111 +1,133 @@
-@extends('layouts.user')
-@section('header-content')
-<h1 class="display-2 text-white">ICT Help Desk</h1>
-<p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
-<a href="{{ route('user.dashboard') }}" class="btn btn-danger">Cancel</a>
-@stop
+@extends('layouts.master')
+@section('title', 'Help Desk | Generate Ticket')
 @section('content')
 <div class="row">
-	<div class="col-xl-12 order-xl-1">
-	  <div class="card bg-secondary shadow">
-	    <div class="card-header bg-white border-0">
-	      <div class="row align-items-center">
-	        <div class="col-8">
-	          <h3 class="mb-0">My account</h3>
-	        </div>
-	        <div class="col-4 text-right">
-	          <a href="#!" class="btn btn-sm btn-primary">Settings</a>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="card-body">
-	      <form action="{{ route('tickets.store') }}" method="POST">
-	      	@csrf
 
-	        <h6 class="heading-small text-muted mb-4">Office information</h6>
-	        <div class="pl-lg-4">
-	          <div class="row">
-	            <div class="col-lg-6">
-	              <div class="form-group">
-	                <label class="form-control-label" for="name">Name</label>
-	                <input type="text" id="name" name="name" class="form-control form-control-alternative" value="{{ Auth::user()->name }}" disabled>
-	              </div>
-	            </div>
-	            <div class="col-lg-6">
-	              <div class="form-group">
-	                <label class="form-control-label" for="email">Email address</label>
-	                <input type="email" id="email" name="email" class="form-control form-control-alternative" value="{{ Auth::user()->email }}" disabled>
-	              </div>
-	            </div>
-	          </div>
-	          <div class="row">
-	            <div class="col-lg-6">
-	              <div class="form-group">
-	                <label class="form-control-label" for="department_id">Department</label>
-	                <select name="department_id" id="department_id" class="form-control form-control-alternative">
-	                	<option value="">Select your Department</option>
-	                	@foreach($departments as $department)
-	                		<option value="{{ $department->id }}">{{ $department->name }}</option>
-	                	@endforeach
-	                </select>
-	              </div>
-	            </div>
-	            <div class="col-lg-6">
-	              <div class="form-group">
-	                <label class="form-control-label" for="category_id">Service Required</label>
-	                <select name="category_id" id="category_id" class="form-control form-control-alternative">
-	                	<option value="">Select Service Category</option>
-	                	@foreach($categories as $category)
-	                		<option value="{{ $category->id }}">{{ $category->name }}</option>
-	                	@endforeach
-	                </select>
-	              </div>
-	            </div>
-	          </div>
-	          <div class="row">
-	          	<div class="col-lg-4">
-	              <div class="form-group">
-	                <label class="form-control-label" for="room_no">Room No.</label>
-	                <input type="text" id="room_no" name="room_no" class="form-control form-control-alternative">
-	              </div>
-	            </div>
-	            <div class="col-lg-8">
-	              <div class="form-group">
-	                <label class="form-control-label" for="priority">Priority</label>
-	                <select name="priority" id="priority" class="form-control form-control-alternative">
-	                	<option value="">Select Urgency</option>
-	                	<option value="normal">Normal</option>
-	                	<option value="medium">Medium</option>
-	                	<option value="high">High</option>
-	                </select>
-	              </div>
-	            </div>
-	          </div>
-	        </div>
-	        
-	        <hr class="my-4" />
-	        <!-- Description -->
-	        <h6 class="heading-small text-muted mb-4">What seems to be the Issue?</h6>
-	        <div class="pl-lg-4">
-	          <div class="form-group">
-	            <label>Describe the Issue you are currently facing</label>
-	            <textarea rows="4" class="form-control form-control-alternative" placeholder="Enter Message" name="complain"></textarea>
-	          </div>
-	        </div>
+	<div class="col-lg-12">
+		<form action="{{ route('tickets.store') }}" method="POST" class="form-horizontal">
+			@csrf
+			
+			<div class="card">
+				<div class="card-header">
+				    <strong>Generate new</strong> Ticket
+				</div>
+				<div class="card-body card-block">
+			    	<div class="row form-group">
+			            <div class="col col-md-3">
+			                <label for="categories" class="form-control-label">Request Categories</label>
+			            </div>
+			            <div class="col-12 col-md-9">
+			                <select name="categories" id="categories" class="form-control dynamic" data-dependent="issues">
+			                    <option value="">Select Request</option>
+			                    @foreach($categories as $category)
+			                    	<option value="{{ $category->id }}">{{ $category->name }}</option>
+			                    @endforeach
+			                </select>
+			            </div>
+			        </div>
 
-	        <div class="pl-lg-4">
-	          <div class="row">
-	          	<div class="col">
-	          		<div class="form-group">
-		            	<button type="submit" class="btn btn-primary">Generate Support Ticket</button>
-		            </div>
-	          	</div>
-	            
-	          </div>
-	        </div>
-	      </form>
-	    </div>
-	  </div>
-	</div>
+			        <div class="row form-group">
+			            <div class="col col-md-3">
+			                <label for="issues" class="form-control-label">Issue</label>
+			            </div>
+			            <div class="col-12 col-md-9">
+			                <select name="issues" id="issues" class="form-control dynamic" data-dependent="specification">
+			                    <option value="">Select the issue your are experiencing</option>
+			                    @include('pages.users.ajaxs.issues')
+			                </select>
+			            </div>
+			        </div>
+
+			        <div class="row form-group">
+			            <div class="col col-md-3">
+			                <label for="specification" class="form-control-label">Specification</label>
+			            </div>
+			            <div class="col-12 col-md-9">
+			                <select name="specification" id="specification" class="form-control">
+			                    <option value="">Which of the following suits the issue?</option>
+			                    @include('pages.users.ajaxs.issues')
+			                </select>
+			            </div>
+			        </div>
+
+
+			        <div class="row form-group">
+			            <div class="col col-md-3">
+			                <label for="complain" class=" form-control-label">Additional Information</label>
+			            </div>
+			            <div class="col-12 col-md-9">
+			                <textarea name="complain" id="complain" rows="9" placeholder="Add Additional Information, if your issue concerns a printer please add the printer name..." class="form-control"></textarea>
+			            </div>
+			        </div>
+
+			        <div class="row form-group">
+			            <div class="col col-md-3">
+			                <label for="priority" class="form-control-label">Priority</label>
+			            </div>
+			            <div class="col-12 col-md-9">
+			                <select name="priority" id="priority" class="form-control">
+			                    <option value="">Choose Priority</option>
+			                    <option value="high">High</option>
+			                    <option value="normal">Normal</option>
+			                    <option value="low">Low</option>
+			                </select>
+			            </div>
+			        </div>
+
+				</div>
+				<div class="card-footer">
+				    <button type="submit" class="btn btn-primary btn-sm">
+				        <i class="fa fa-dot-circle-o"></i> Submit
+				    </button>
+				    <a href="{{ route('departments.index') }}" class="btn btn-danger btn-sm">
+				    	<i class="fa fa-ban"></i> Cancel
+				    </a>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
+@stop
+@section('scripts')
+	<script>
+
+		var token = "{{ csrf_token() }}";
+		var url = "{{ route('dependencies.fetch') }}";
+		
+	
+		$(document).ready(function() {
+
+
+
+			$('.dynamic').change(function() {
+
+
+				if ($(this).val() != '') {
+					var select = $(this).attr('id');
+					var value = $(this).val();
+					var dependent = $(this).data('dependent');
+
+					$.ajax({
+						url : url,
+						method : 'POST',
+						data : {
+							select : select,
+							_token : token,
+							value : value,
+							dependent : dependent,
+						},
+						success : function(data) {
+							$("select[name='"+dependent+"'").html('');
+	            			$("select[name='"+dependent+"'").html(data.options);
+							//$('#'+dependent).html(result);
+						}
+					});
+				}
+
+
+			});
+		});
+
+
+	</script>
 @stop

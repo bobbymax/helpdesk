@@ -1,17 +1,35 @@
 <?php
 
 Route::get('/', 'HomeController@index');
+Route::get('/subs', function() {
+	return view('layouts.subs');
+});
 
 Auth::routes();
 
 Route::get('login/microsoft/callback', 'OfficialAccountController@handleProviderCallback');
 Route::get('graph/users/callback', 'OfficialAccountController@handleGraphCallback');
 
+Route::prefix('dashboard')->group(function() {
+
+	Route::resource('tickets', 'TicketController');
+	Route::post('/dependency/fetch', 'TicketController@fetch')->name('dependencies.fetch');
+	Route::get('/', 'HomeController@index')->name('user.dashboard');
+
+});
+
 Route::prefix('admin')->group(function() {
 
 	Route::resource('directorates', 'DirectorateController');
+	Route::resource('divisions', 'DivisionController');
 	Route::resource('departments', 'DepartmentController');
 	Route::resource('categories', 'CategoryController');
+	Route::resource('issues', 'IssueController');
+	Route::resource('locations', 'LocationController'); 
+
+	// Manage Users
+	Route::resource('users', 'AdminUserController');
+
 	Route::get('{ticket}/report', 'ReportController@create')->name('ticket.report');
 	Route::post('{ticket}/report', 'ReportController@store')->name('admin.report.store');
 
@@ -21,6 +39,8 @@ Route::prefix('admin')->group(function() {
 	Route::post('/tickets/create', 'AdminTicketController@store')->name('admin.store.ticket');
 	Route::post('/users/fetch', 'AdminTicketController@fetch')->name('users.list.fetch');
 	Route::get('/tickets/{ticket}/edit', 'AdminTicketController@edit')->name('admin.ticket.edit');
+
+	
 	Route::patch('/tickets/{ticket}/assign', 'AdminTicketController@assign')->name('admin.ticket.assign');
 	Route::get('/tickets/{ticket}/update', 'AdminTicketController@update')->name('admin.ticket.update');
 
@@ -30,8 +50,4 @@ Route::prefix('admin')->group(function() {
 	Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
 });
 
-Route::prefix('dashboard')->group(function() {
 
-	Route::resource('tickets', 'TicketController');
-	Route::get('/', 'HomeController@index')->name('user.dashboard');
-});

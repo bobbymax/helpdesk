@@ -36,7 +36,7 @@ function slugify($text) {
 
 function ticketcode($directorate_abv, $department_abv)
 {
-  return $directorate_abv . time() . $department_abv . getToken(5);
+  return $directorate_abv . "/" . $department_abv . "/" . getToken(5) . "/" . date('Y');
 }
 
 /**

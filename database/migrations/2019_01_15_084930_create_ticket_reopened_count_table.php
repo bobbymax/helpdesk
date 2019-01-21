@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTicketsTableAddAssignedToColumn extends Migration
+class CreateTicketReopenedCountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class UpdateTicketsTableAddAssignedToColumn extends Migration
      */
     public function up()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->string('assigned_to')->nullable()->after('complain');
+        Schema::create('ticket_count', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('ticket_id')->unsigned();
+            $table->integer('count')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class UpdateTicketsTableAddAssignedToColumn extends Migration
      */
     public function down()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->dropColumn('assigned_to');
-        });
+        Schema::dropIfExists('ticket_count');
     }
 }

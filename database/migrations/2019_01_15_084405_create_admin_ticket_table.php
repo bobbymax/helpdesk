@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTicketUsersTable extends Migration
+class CreateAdminTicketTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateTicketUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_user', function (Blueprint $table) {
-            $table->integer('ticket_id')->unsigned();
+        Schema::create('admin_ticket', function (Blueprint $table) {
             $table->integer('admin_id')->unsigned();
+            $table->integer('ticket_id')->unsigned();
+            
 
             $table->foreign('ticket_id')
                   ->references('id')
@@ -27,7 +28,7 @@ class CreateTicketUsersTable extends Migration
                   ->on('admins')
                   ->onDelete('cascade');
 
-            $table->primary(['ticket_id', 'admin_id']);
+            $table->primary(['admin_id', 'ticket_id']);
             $table->timestamps();
         });
     }
@@ -39,6 +40,6 @@ class CreateTicketUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_user');
+        Schema::dropIfExists('admin_ticket');
     }
 }

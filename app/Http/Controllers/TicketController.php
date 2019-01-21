@@ -3,10 +3,13 @@
 namespace HelpDesk\Http\Controllers;
 
 use HelpDesk\Ticket;
-use HelpDesk\Department;
+use HelpDesk\Issue;
 use HelpDesk\Category;
 use Illuminate\Http\Request;
 use Auth;
+use DB;
+use Mail;
+use HelpDesk\Mail\NewTicket;
 
 class TicketController extends Controller
 {
@@ -33,9 +36,9 @@ class TicketController extends Controller
      */
     public function create()
     {
-        $departments = Department::latest()->get();
+        //$issues = Issue::latest()->get();
         $categories = Category::latest()->get();
-        return view('pages.users.tickets.create', compact('departments', 'categories'));   
+        return view('pages.users.tickets.create', compact('categories'));   
     }
 
     /**
@@ -47,25 +50,28 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'department_id' => 'required|integer',
-            'category_id' => 'required|integer',
-            'room_no' => 'required|integer',
+            'issues' => 'required|integer',
+            'categories' => 'required|integer',
+            'specification' => 'required|string',
             'complain' => 'required|min:3',
             'priority' => 'required|string',
         ]);
 
-        $department = Department::find($request->department_id);
+        // $department = Department::find($request->department_id);
 
         $ticket = new Ticket;
 
-        $ticket->ticket_code = ticketcode($department->directorate->abv, $department->abv);
-        $ticket->department_id = $department->id;
-        $ticket->category_id = $request->category_id;
-        $ticket->room_no = $request->room_no;
+        $ticket->ticket_code = ticketcode($this->loggedin()->profile->department->directorate->abv, $this->loggedin()->profile->department->abv);
+
+        $ticket->issue_id = $request->issues;
+        $ticket->category_id = $request->categories;
+        $ticket->issue = $request->specification;
         $ticket->complain = $request->complain;
         $ticket->priority = $request->priority;
 
         $this->loggedin()->tickets()->save($ticket);
+
+        Mail::to("IT@ncdmb.gov.ng")->cc($ticket->owner->email)->queue(new NewTicket($ticket));
 
         flash()->overlay('Thank You!!', 'An ICT staff would be with you shortly.');
         return redirect()->route('user.dashboard');
@@ -108,6 +114,38 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         //
+    }
+
+    public function fetch(Request $request)
+    {
+        if ($request->ajax()) {
+            $select = $request->select;
+            $value = $request->value;
+            $dependent = $request->dependent;
+
+            if ($value !== null) {
+
+                $query = DB::table($select)->where('id', $value)->first();
+
+                if ($select == 'categories') {
+
+                    $results = Issue::where('category_id', $query->id)->pluck('name', 'id')->all();
+
+
+                } else {
+
+                    $results = $query;
+                    
+                }
+
+                //dd($results);
+
+                $data = view('pages.users.ajaxs.issues', compact('results', 'select', 'dependent'))->render();
+
+                return response()->json(['options'=>$data]);
+                
+            }
+        }
     }
 
     /**

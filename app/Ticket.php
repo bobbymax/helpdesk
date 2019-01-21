@@ -6,16 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['ticket_code', 'department_id', 'category_id', 'room_no', 'complain', 'resolved', 'archived'];
+    protected $fillable = ['ticket_code', 'user_id', 'category_id', 'issue_id', 'issue', 'complain', 'assigned_to', 'resolved', 'reopened', 'priority', 'archived'];
 
     public function owner()
     {
     	return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function department()
-    {
-    	return $this->belongsTo(Department::class, 'department_id');
     }
 
     public function service()
@@ -23,9 +18,14 @@ class Ticket extends Model
     	return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function wahala()
+    {
+        return $this->belongsTo(Issue::class, 'issue_id');
+    }
+
     public function admins()
     {
-        return $this->belongsToMany(Admin::class, 'ticket_user');
+        return $this->belongsToMany(Admin::class, 'admin_ticket');
     }
 
     public function report()

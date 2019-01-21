@@ -18,11 +18,15 @@ class CreateReportsTable extends Migration
             $table->integer('admin_id')->unsigned();
             $table->integer('ticket_id')->unsigned();
 
+            $table->string('report_code')->unique();
+
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
             $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
 
             $table->text('description');
+            $table->string('assigned_to')->nullable();
             $table->boolean('archived')->default(false);
+            $table->integer('reopened_count')->default(0);
             $table->timestamps();
         });
     }

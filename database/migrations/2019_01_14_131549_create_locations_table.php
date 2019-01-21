@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTicketsTableAddPriorityColumn extends Migration
+class CreateLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class UpdateTicketsTableAddPriorityColumn extends Migration
      */
     public function up()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->string('priority')->default('normal')->after('assigned_to');
+        Schema::create('locations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class UpdateTicketsTableAddPriorityColumn extends Migration
      */
     public function down()
     {
-        Schema::table('tickets', function (Blueprint $table) {
-            $table->dropColumn('priority');
-        });
+        Schema::dropIfExists('locations');
     }
 }
