@@ -100,10 +100,10 @@ class AdminController extends Controller
             foreach ($request->roles as $value) {
                 $role = Role::with('permissions')->findOrFail($value);
                 if ($value !== null) {
-                    // $exist = DB::select(DB::raw("SELECT * FROM admin_role WHERE admin_id = '{$admin->id}' AND role_id = '{$role->id}'"));
-                    // if (! $exist) {
-                    //     $admin->actAs($role);   
-                    // }
+                    $exist = DB::select(DB::raw("SELECT * FROM admin_role WHERE admin_id = '{$admin->id}' AND role_id = '{$role->id}'"));
+                    if (! $exist) {
+                        $admin->actAs($role);   
+                    }
                     
                 }
             }
