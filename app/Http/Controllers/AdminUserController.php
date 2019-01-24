@@ -105,7 +105,10 @@ class AdminUserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('pages.admin.users.edit', compact('user'));
+        $divisions = Division::latest()->get();
+        $departments = Department::latest()->get();
+        $locations = Location::latest()->get();
+        return view('pages.admin.users.edit', compact('user', 'divisions', 'departments', 'locations'));
     }
 
     /**
@@ -120,8 +123,10 @@ class AdminUserController extends Controller
         $this->validate($request, [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'directorate_id' => 'required|integer',
+            'division_id' => 'required|integer',
             'department_id' => 'required|integer',
+            'location_id' => 'required|integer',
+            'staff_id' => 'required|integer',
             'room_no' => 'required',
         ]);
 
@@ -132,7 +137,9 @@ class AdminUserController extends Controller
         if ($user->save()) {
 
             $user->profile->department_id = $request->department_id;
-            $user->profile->directorate_id = $request->directorate_id;
+            $user->profile->division_id = $request->division_id;
+            $user->profile->location_id = $request->location_id;
+            $user->profile->staff_id = $request->staff_id;
             $user->profile->room_no = $request->room_no;
 
             $user->profile->save();

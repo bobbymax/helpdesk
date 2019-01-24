@@ -10,6 +10,7 @@ use Auth;
 use DB;
 use Mail;
 use HelpDesk\Mail\NewTicket;
+use HelpDesk\Activity;
 
 class TicketController extends Controller
 {
@@ -57,8 +58,6 @@ class TicketController extends Controller
             'priority' => 'required|string',
         ]);
 
-        // $department = Department::find($request->department_id);
-
         $ticket = new Ticket;
 
         $ticket->ticket_code = ticketcode($this->loggedin()->profile->department->directorate->abv, $this->loggedin()->profile->department->abv);
@@ -71,7 +70,12 @@ class TicketController extends Controller
 
         $this->loggedin()->tickets()->save($ticket);
 
-        Mail::to("IT@ncdmb.gov.ng")->cc($ticket->owner->email)->queue(new NewTicket($ticket));
+        Activity::create([
+            'user_id' => $this->loggedin()->id,
+            'activity' => "Created Ticket",
+        ]);
+
+        Mail::to("icthelpdesk@ncdmb.gov.ng")->cc($ticket->owner->email)->queue(new NewTicket($ticket));
 
         flash()->overlay('Thank You!!', 'An ICT staff would be with you shortly.');
         return redirect()->route('user.dashboard');

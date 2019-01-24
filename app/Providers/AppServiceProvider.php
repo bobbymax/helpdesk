@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('partials.admin.sidebar', function($view) {
+            $view->with('menus', \HelpDesk\Menu::latest()->get());
+        });
     }
 
     /**

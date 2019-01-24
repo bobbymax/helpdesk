@@ -135,6 +135,21 @@ class AdminTicketController extends Controller
         }
     }
 
+    public function approvals()
+    {
+        $tickets = Ticket::where('report_generated', 1)->where('archived', 0)->latest()->get();
+        return view('pages.admin.tickets.approvals', compact('tickets'));
+    }
+
+    public function close(Ticket $ticket)
+    {
+        $ticket->archived = true;
+        $ticket->save();
+
+        flash()->success('Success!!', 'This ticket is now closed.');
+        return redirect()->route('admin.tickets.approval');
+    }
+
     public function update(Ticket $ticket)
     {
     	$ticket->resolved = true;

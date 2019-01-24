@@ -4,7 +4,10 @@ namespace HelpDesk\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use HelpDesk\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+//use Illuminate\Support\Facades\Validator;
 use Auth;
+use HelpDesk\Admin;
 
 class AdminLoginController extends Controller
 {

@@ -39,4 +39,31 @@ class Admin extends Authenticatable
     {
         return $this->hasMany(Report::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function actAs(Role $role)
+    {
+        return $this->roles()->save($role);
+    }
+
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('slug', $role);   
+        }
+
+        //return !! $this->intersect($this->roles)->count();
+
+        foreach ($role as $r) {
+            if ($this->hasRole($r->slug)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

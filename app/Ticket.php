@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['ticket_code', 'user_id', 'category_id', 'issue_id', 'issue', 'complain', 'assigned_to', 'resolved', 'reopened', 'priority', 'archived'];
+    protected $fillable = ['ticket_code', 'user_id', 'category_id', 'issue_id', 'issue', 'complain', 'assigned_to', 'resolved', 'reopened', 'report_generated', 'priority', 'archived'];
 
     public function owner()
     {

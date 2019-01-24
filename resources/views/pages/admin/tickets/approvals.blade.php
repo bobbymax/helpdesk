@@ -1,12 +1,9 @@
 @extends('layouts.admin')
-@section('Title', 'Help Desk | tickets')
+@section('Title', 'Help Desk | Approve Tickets')
 @section('content')
 <div class="row align-items-center">
   <div class="col">
     <h3 class="mb-0">Tickets</h3>
-  </div>
-  <div class="col text-right">
-    <a href="{{ route('admin.create.ticket') }}" class="btn btn-sm btn-primary">+ Generate Ticket</a>
   </div>
 </div>
 <div class="row m-t-30">
@@ -58,15 +55,7 @@
                         @endif
                       </td>
                       <td>
-                        @if($ticket->assigned_to === null)
-                          <a class="btn btn-sm btn-primary" href="{{ route('admin.ticket.edit', $ticket->id) }}"><i class="fas fa-edit"></i></a>
-                        @else
-                          @if($ticket->report_generated !== 1)
-                            <a class="btn btn-sm btn-success" href="{{ route('ticket.report', $ticket->id) }}"><i class="fas fa-send"></i></a>
-                          @else
-                            <a class="btn btn-sm btn-primary" href="#" onclick="return false;"><i class="fas fa-send"></i> Awaiting Closure</a>
-                          @endif
-                        @endif
+                        <a class="btn btn-sm btn-primary" href="{{ route('show.report', $ticket->id) }}"><i class="fas fa-send"></i> View Report</a>
                       </td>
                     </tr>
                   @endforeach
