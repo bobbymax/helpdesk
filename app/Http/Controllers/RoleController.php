@@ -101,10 +101,10 @@ class RoleController extends Controller
             foreach ($request->permissions as $value) {
                 $permission = Permission::with('roles')->findOrFail($value);
                 if ($value !== null) {
-                    $exist = DB::select(DB::raw("SELECT * FROM permission_role WHERE permission_id = '{$permission->id}' AND role_id = '{$role->id}'"));
-                    if (! $exist) {
-                        $role->givePermissionTo($permission);   
-                    }
+                    //$exist = DB::select(DB::raw("SELECT * FROM permission_role WHERE permission_id = '{$permission->id}' AND role_id = '{$role->id}'"));
+                    // if (! $exist) {
+                    //     $role->givePermissionTo($permission);   
+                    // }
                     
                 }
             }

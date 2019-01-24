@@ -56,8 +56,6 @@ class Admin extends Authenticatable
             return $this->roles->contains('slug', $role);   
         }
 
-        //return !! $this->intersect($this->roles)->count();
-
         foreach ($role as $r) {
             if ($this->hasRole($r->slug)) {
                 return true;
