@@ -23,26 +23,7 @@
                 @endcan
 
               @endforeach
-              
-              <li>
-                  <a href="{{ route('roles.index') }}">
-                      <i class="fas fa-archive"></i>Roles</a>
-              </li>
-
-              <li>
-                  <a href="{{ route('permissions.index') }}">
-                      <i class="fas fa-archive"></i>Permissions</a>
-              </li>
-
-              <li>
-                  <a href="{{ route('users.index') }}">
-                      <i class="fas fa-archive"></i>Users</a>
-              </li>
-
-              <li>
-                  <a href="{{ route('admins.index') }}">
-                      <i class="fas fa-archive"></i>Admins</a>
-              </li>
+            
 
               <li>
                   <a href="{{ route('archived.tickets') }}">
