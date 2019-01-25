@@ -5,7 +5,13 @@ A ticket with reference number {{ $ticket->ticket_code }} under request category
 
 * "{{ $ticket->issue }}"
 
-The priority level of this request is {{ $ticket->priority }} and as such should be attended to with immidiate effect.
+## Details
+
+"{{ $ticket->complain }}"
+
+** Note **
+
+> The priority level of this request is {{ $ticket->priority }} and as such should be attended to with immidiate effect.
 
 
 Best Regards,<br>
