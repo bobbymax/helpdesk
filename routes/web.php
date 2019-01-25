@@ -22,6 +22,7 @@ Route::prefix('admin')->group(function() {
 	Route::resource('projects', 'ProjectController');
 	Route::resource('roles', 'RoleController');
 	Route::resource('permissions', 'PermissionController');
+	Route::resource('menus', 'MenuController');
 
 	// Manage Users
 	Route::resource('users', 'AdminUserController');

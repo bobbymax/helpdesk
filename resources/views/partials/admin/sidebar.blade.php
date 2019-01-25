@@ -23,6 +23,11 @@
                 @endcan
 
               @endforeach
+
+              <li>
+                  <a href="{{ route('menus.create') }}">
+                      <i class="fas fa-plus"></i>Add a Menu</a>
+              </li>
             
 
               <li>

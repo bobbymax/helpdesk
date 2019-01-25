@@ -18,7 +18,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        $menus = Menu::latest()->get();
+        return view('pages.admin.menus.index', compact('menus'));
     }
 
     /**
@@ -28,7 +29,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.menus.create');
     }
 
     /**
@@ -39,7 +40,24 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'guard' => 'required|string',
+            'icon' => 'required',
+            'permission' => 'required|string',
+        ]);
+
+        Menu::create([
+            'name' => $request->name,
+            'slug' => slugify($request->name),
+            'guard' => $request->guard,
+            'icon' => $request->icon,
+            'permission' => $request->permission,
+            'url' => $request->url
+        ]);
+
+        flash()->success('Success!!', 'Menu item created successfully.');
+        return back();
     }
 
     /**
@@ -61,7 +79,7 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        return view('pages.admin.menus.edit', compact('menu'));
     }
 
     /**
@@ -73,7 +91,23 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'guard' => 'required|string',
+            'icon' => 'required',
+            'permission' => 'required|string',
+        ]);
+
+        $menu->name = $request->name;
+        $menu->slug = slugify($request->name);
+        $menu->guard = $request->guard;
+        $menu->icon = $request->icon;
+        $menu->permission = $request->permission;
+        $menu->url = $request->url;
+        $menu->save();
+
+        flash()->success('Success!!', 'Menu item created successfully.');
+        return redirect()->route('menus.index');
     }
 
     /**
@@ -84,6 +118,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+        flash()->success('Success!!', 'You have successfully deleted this menu.');
+        return redirect()->route('menus.index');
     }
 }
