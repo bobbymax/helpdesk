@@ -5,7 +5,9 @@
     <h3 class="mb-0">Directorates</h3>
   </div>
   <div class="col text-right">
+    @can('create-directorates')
     <a href="{{ route('directorates.create') }}" class="btn btn-sm btn-primary">+ Add Directorate</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -32,8 +34,13 @@
                         <form action="{{ route('directorates.destroy', $directorate->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+
+                          @can('edit-directorates')
                           <a class="btn btn-sm btn-primary" href="{{ route('directorates.edit', $directorate->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-directorates')
                           <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

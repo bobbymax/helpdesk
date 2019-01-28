@@ -7,7 +7,10 @@ use HelpDesk\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use HelpDesk\Role;
+use HelpDesk\Avatar;
+use Image;
 use DB;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -67,11 +70,6 @@ class AdminController extends Controller
         ]);
     }
 
-    public function assignRole(Request $request, Admin $admin)
-    {
-        //
-    }
-
     public function create()
     {
         return view('pages.admin.admins.create');
@@ -81,6 +79,45 @@ class AdminController extends Controller
     {
         $roles = Role::latest()->get();
         return view('pages.admin.admins.edit', compact('admin', 'roles'));
+    }
+
+    public function profileView()
+    {
+        return view('pages.admin.profile.index');
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|string|email',
+        ]);
+
+        $this->loggedInAdmin()->name = $request->name;
+        $this->loggedInAdmin()->email = $request->email;
+        $this->loggedInAdmin()->save();
+
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $filename = time() . $file->getClientOriginalName();
+            $location = public_path('images/admins/' . $filename);
+            Image::make($file)->fit(300, 300)->save($location);
+
+            //
+            
+            if ($this->loggedInAdmin()->profilePicture) {
+                $this->loggedInAdmin()->profilePicture()->update(['avatar' => $filename]);
+            } else {
+                $avatar = new Avatar;
+                $avatar->avatar = $filename;
+
+                $this->loggedInAdmin()->profilePicture()->save($avatar);
+            }
+        }
+
+        flash()->success('Success!!', 'Your profile has been updated successfully.');
+        return redirect()->route('admin.dashboard');
+
     }
 
     public function update(Request $request, Admin $admin)
@@ -118,6 +155,11 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         //
+    }
+
+    protected function loggedInAdmin()
+    {
+        return Auth::user();
     }
 
     protected function getRegisteredAdmins()

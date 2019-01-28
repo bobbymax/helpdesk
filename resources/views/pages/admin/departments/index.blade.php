@@ -6,7 +6,9 @@
     <h3 class="mb-0">Departments</h3>
   </div>
   <div class="col text-right">
+    @can('create-departments')
     <a href="{{ route('departments.create') }}" class="btn btn-sm btn-primary">+ Add department</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -31,8 +33,13 @@
                         <form action="{{ route('departments.destroy', $department->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+
+                          @can('edit-departments')
                           <a class="btn btn-sm btn-primary" href="{{ route('departments.edit', $department->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-departments')
                           <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

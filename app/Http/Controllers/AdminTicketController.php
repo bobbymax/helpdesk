@@ -11,6 +11,7 @@ use HelpDesk\Category;
 use HelpDesk\User;
 use HelpDesk\Mail\TicketAssigned;
 use Mail;
+use PDF;
 
 
 class AdminTicketController extends Controller
@@ -108,6 +109,8 @@ class AdminTicketController extends Controller
 
         return $user;
     }
+
+    
 
     public function fetch(Request $request)
     {

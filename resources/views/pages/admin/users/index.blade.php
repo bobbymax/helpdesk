@@ -5,7 +5,9 @@
     <h3 class="mb-0">Users</h3>
   </div>
   <div class="col text-right">
+    @can('create-users')
     <a href="{{ route('users.create') }}" class="btn btn-sm btn-primary">+ Create User</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -36,8 +38,12 @@
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <a class="btn btn-sm btn-primary" href="{{ route('users.edit', $user->id) }}"><i class="fas fa-edit"></i></a>
-                          <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @can('edit-users')
+                            <a class="btn btn-sm btn-primary" href="{{ route('users.edit', $user->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-users')
+                            <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

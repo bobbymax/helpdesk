@@ -6,7 +6,9 @@
     <h3 class="mb-0">permissions</h3>
   </div>
   <div class="col text-right">
+    @can('create-permissions')
     <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-primary">+ Create Permission</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -29,8 +31,12 @@
                         <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+                          @can('edit-permissions')
                           <a class="btn btn-sm btn-primary" href="{{ route('permissions.edit', $permission->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-permissions')
                           <button class="btn btn-sm btn-danger" permission="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

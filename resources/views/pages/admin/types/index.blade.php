@@ -6,7 +6,9 @@
     <h3 class="mb-0">Service Types</h3>
   </div>
   <div class="col text-right">
+    @can('create-types')
     <a href="{{ route('types.create') }}" class="btn btn-sm btn-primary">+ Create Service Type</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -33,8 +35,12 @@
                         <form action="{{ route('types.destroy', $type->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+                          @can('edit-types')
                           <a class="btn btn-sm btn-primary" href="{{ route('types.edit', $type->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-types')
                           <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

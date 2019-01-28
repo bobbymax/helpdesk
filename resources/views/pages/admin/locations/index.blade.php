@@ -6,7 +6,9 @@
     <h3 class="mb-0">Locations</h3>
   </div>
   <div class="col text-right">
+    @can('create-locations')
     <a href="{{ route('locations.create') }}" class="btn btn-sm btn-primary">+ Add an location</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -31,8 +33,13 @@
                         <form action="{{ route('locations.destroy', $location->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+
+                          @can('edit-locations')
                           <a class="btn btn-sm btn-primary" href="{{ route('locations.edit', $location->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-locations')
                           <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

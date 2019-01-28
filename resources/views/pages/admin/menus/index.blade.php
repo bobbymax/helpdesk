@@ -6,7 +6,9 @@
     <h3 class="mb-0">Menus</h3>
   </div>
   <div class="col text-right">
+    @can('create-menus')
     <a href="{{ route('menus.create') }}" class="btn btn-sm btn-primary">+ Create Menu</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -33,8 +35,12 @@
                         <form action="{{ route('menus.destroy', $menu->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+                          @can('edit-menus')
                           <a class="btn btn-sm btn-primary" href="{{ route('menus.edit', $menu->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-menus')
                           <button class="btn btn-sm btn-danger" menu="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

@@ -45,6 +45,11 @@ class Admin extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function profilePicture()
+    {
+        return $this->hasOne(Avatar::class);
+    }
+
     public function actAs(Role $role)
     {
         return $this->roles()->save($role);

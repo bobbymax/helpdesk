@@ -6,7 +6,9 @@
     <h3 class="mb-0">Categories</h3>
   </div>
   <div class="col text-right">
+    @can('create-categories')
     <a href="{{ route('categories.create') }}" class="btn btn-sm btn-primary">+ Add category</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -31,8 +33,13 @@
                         <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+
+                          @can('edit-categories')
                           <a class="btn btn-sm btn-primary" href="{{ route('categories.edit', $category->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-categories')
                           <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

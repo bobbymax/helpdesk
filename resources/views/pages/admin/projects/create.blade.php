@@ -28,6 +28,21 @@
 
 			        <div class="row form-group">
 			            <div class="col col-md-3">
+			                <label for="subCategory_id" class=" form-control-label">Sub Categories</label>
+			            </div>
+			            <div class="col-12 col-md-9">
+			                <select name="subCategory_id" id="subCategory_id" class="form-control">
+			                    <option value="">Select Sub Category</option>
+			                    <option value="0">None</option>
+			                    @foreach($subs as $sub)
+			                    	<option value="{{ $sub->id }}">{{ $sub->name }}</option>
+			                    @endforeach
+			                </select>
+			            </div>
+			        </div>
+
+			        <div class="row form-group">
+			            <div class="col col-md-3">
 			                <label for="issue" class="form-control-label">Issue</label>
 			            </div>
 			            <div class="col-12 col-md-9">

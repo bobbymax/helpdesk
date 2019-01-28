@@ -3,6 +3,8 @@
 namespace HelpDesk\Http\Controllers;
 
 use HelpDesk\Project;
+use HelpDesk\SubCategory;
+use HelpDesk\Service;
 use HelpDesk\Type;
 use Illuminate\Http\Request;
 use DB;
@@ -34,7 +36,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::latest()->get();
-        return view('pages.admin.projects.create', compact('types'));
+        $subs = SubCategory::latest()->get();
+        return view('pages.admin.projects.create', compact('types', 'subs'));
     }
 
     /**
@@ -50,10 +53,12 @@ class ProjectController extends Controller
             'issue' => 'required',
             'status' => 'required',
             'todo' => 'required',
+            'subCategory_id' => 'required',
         ]);
 
         Project::create([
             'type_id' => $request->type_id,
+            'subCategory_id' => $request->subCategory_id,
             'issue' => $request->issue,
             'status' => $request->issue,
             'todo' => $request->todo,
@@ -83,7 +88,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::latest()->get();
-        return view('pages.admin.projects.edit', compact('types', 'project'));
+        $subs = SubCategory::latest()->get();
+        return view('pages.admin.projects.edit', compact('types', 'project', 'subs'));
     }
 
     /**
@@ -100,9 +106,11 @@ class ProjectController extends Controller
             'issue' => 'required',
             'status' => 'required',
             'todo' => 'required',
+            'subCategory_id' => 'required',
         ]);
 
         $project->type_id = $request->type_id;
+        $project->subCategory_id = $request->subCategory_id;
         $project->issue = $request->issue;
         $project->status = $request->status;
         $project->todo = $request->todo;
@@ -122,7 +130,8 @@ class ProjectController extends Controller
                            ->whereIn(DB::raw('YEAR(created_at)'), [$currentYear])
                            ->latest()
                            ->get();
-        return view('pages.admin.reports.report', compact('projects'));
+        $services = Service::latest()->get();
+        return view('pages.admin.reports.report', compact('projects', 'services'));
     }
 
     /**

@@ -6,7 +6,9 @@
     <h3 class="mb-0">Closed Tickets</h3>
   </div>
   <div class="col text-right">
+    @can('generate-report')
     <a href="#" class="btn btn-sm btn-success">+ Generate Monthly Report</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">

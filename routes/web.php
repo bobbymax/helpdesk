@@ -23,6 +23,9 @@ Route::prefix('admin')->group(function() {
 	Route::resource('roles', 'RoleController');
 	Route::resource('permissions', 'PermissionController');
 	Route::resource('menus', 'MenuController');
+	Route::resource('subCategories', 'SubCategoryController');
+
+	Route::get('generate/report', 'PdfController@generateReport')->name('generate.report');
 
 	// Manage Users
 	Route::resource('users', 'AdminUserController');
@@ -46,6 +49,9 @@ Route::prefix('admin')->group(function() {
 
 	Route::patch('/tickets/{ticket}/assign', 'AdminTicketController@assign')->name('admin.ticket.assign');
 	Route::get('/tickets/{ticket}/update', 'AdminTicketController@update')->name('admin.ticket.update');
+
+	Route::get('/profile', 'AdminController@profileView')->name('view.profile');
+	Route::patch('/profile', 'AdminController@profileUpdate')->name('update.profile');
 
 	Route::get('/admins/display', 'AdminController@display')->name('admins.index');
 	Route::get('/admins/create', 'AdminController@create')->name('admins.create');

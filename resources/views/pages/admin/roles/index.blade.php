@@ -6,7 +6,9 @@
     <h3 class="mb-0">Roles</h3>
   </div>
   <div class="col text-right">
+    @can('create-roles')
     <a href="{{ route('roles.create') }}" class="btn btn-sm btn-primary">+ Create Role</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
@@ -29,8 +31,12 @@
                         <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+                          @can('edit-roles')
                           <a class="btn btn-sm btn-primary" href="{{ route('roles.edit', $role->id) }}"><i class="fas fa-edit"></i></a>
+                          @endcan
+                          @can('delete-roles')
                           <button class="btn btn-sm btn-danger" role="submit"><i class="fas fa-trash"></i></button>
+                          @endcan
                         </form>
                       </td>
                     </tr>

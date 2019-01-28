@@ -24,10 +24,12 @@
 
               @endforeach
 
+              @can('browse-menus')
               <li>
                   <a href="{{ route('menus.create') }}">
                       <i class="fas fa-plus"></i>Add a Menu</a>
               </li>
+              @endcan
             
 
               <li>
@@ -35,10 +37,6 @@
                       <i class="fas fa-archive"></i>Archived</a>
               </li>
 
-              <li>
-                  <a href="{{ route('monthly.report.print') }}">
-                      <i class="fas fa-rocket"></i>Monthly Report</a>
-              </li>
           </ul>
       </nav>
   </div>

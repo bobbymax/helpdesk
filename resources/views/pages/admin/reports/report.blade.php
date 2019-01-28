@@ -6,7 +6,9 @@
     <h3 class="mb-0">Monthly Projects</h3>
   </div>
   <div class="col text-right">
-    <a href="#" class="btn btn-sm btn-success">+ Generate Monthly Report</a>
+    @can('generate-report')
+      <a href="{{ route('generate.report') }}" class="btn btn-sm btn-success">+ Generate Monthly Report</a>
+    @endcan
   </div>
 </div>
 <div class="row m-t-30">
