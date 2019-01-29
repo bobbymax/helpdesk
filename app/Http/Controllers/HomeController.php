@@ -3,6 +3,8 @@
 namespace HelpDesk\Http\Controllers;
 
 use Illuminate\Http\Request;
+use HelpDesk\Ticket;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.users.dashboard');
+        $tickets = $this->loggedin()->tickets;
+        return view('pages.users.tickets.index', compact('tickets'));
+    }
+
+    protected function loggedin()
+    {
+        return Auth::user();
     }
 }

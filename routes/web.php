@@ -1,12 +1,17 @@
 <?php
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'TicketController@index');
 Auth::routes();
 
 Route::prefix('dashboard')->group(function() {
 	Route::resource('tickets', 'TicketController');
+	Route::resource('trainings', 'TrainingController');
+
+	Route::get('tickets/{ticket}/reminder', 'TicketController@reminder')->name('send.reminder');
+	Route::get('tickets/{ticket}/reopen', 'TicketController@reopen')->name('reopen.ticket');
+	Route::get('archived/tickets', 'TicketController@archived')->name('tickets.closed');
 	Route::post('/dependency/fetch', 'TicketController@fetch')->name('dependencies.fetch');
-	Route::get('/', 'HomeController@index')->name('user.dashboard');
+	Route::get('/', 'TicketController@index');
 });
 
 Route::prefix('admin')->group(function() {
@@ -26,6 +31,8 @@ Route::prefix('admin')->group(function() {
 	Route::resource('subCategories', 'SubCategoryController');
 
 	Route::get('generate/report', 'PdfController@generateReport')->name('generate.report');
+	Route::get('trainings', 'AdminTrainingController@index')->name('admin.trainings.index');
+	Route::get('trainings/{training}/show', 'AdminTrainingController@show')->name('admin.trainings.show');
 
 	// Manage Users
 	Route::resource('users', 'AdminUserController');

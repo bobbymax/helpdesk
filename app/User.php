@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
 
+    public function trainings()
+    {
+        return $this->hasMany(Training::class);
+    }
+
     public function profile()
     {
         return $this->hasOne(Profile::class);

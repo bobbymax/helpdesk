@@ -32,7 +32,7 @@ class Admin extends Authenticatable
 
     public function tickets()
     {
-        return $this->belongsToMany(Ticket::class, 'ticket_user');
+        return $this->belongsToMany(Ticket::class, 'admin_ticket');
     }
 
     public function reports()

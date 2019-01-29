@@ -2,6 +2,7 @@
   <div class="section__content section__content--p30">
       <div class="container-fluid">
           <div class="header-wrap">
+            
               <form class="form-header" action="" method="POST">
                   <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                   <button class="au-btn--submit" type="submit">
@@ -9,6 +10,7 @@
                   </button>
               </form>
               <div class="header-button">
+                {{--  
                   <div class="noti-wrap">
                       <div class="noti__item js-item-menu">
                           <i class="zmdi zmdi-comment-more"></i>
@@ -121,6 +123,7 @@
                           </div>
                       </div>
                   </div>
+                  --}}
                   <div class="account-wrap">
                       <div class="account-item clearfix js-item-menu">
                           <div class="image">

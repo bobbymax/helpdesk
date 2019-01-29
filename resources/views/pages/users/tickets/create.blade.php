@@ -79,7 +79,7 @@
 				    <button type="submit" class="btn btn-primary btn-sm">
 				        <i class="fa fa-dot-circle-o"></i> Submit
 				    </button>
-				    <a href="{{ route('departments.index') }}" class="btn btn-danger btn-sm">
+				    <a href="{{ route('tickets.index') }}" class="btn btn-danger btn-sm">
 				    	<i class="fa fa-ban"></i> Cancel
 				    </a>
 				</div>

@@ -10,7 +10,9 @@ use Auth;
 use DB;
 use Mail;
 use HelpDesk\Mail\NewTicket;
+use HelpDesk\Mail\SendReminder;
 use HelpDesk\Activity;
+use HelpDesk\Admin;
 
 class TicketController extends Controller
 {
@@ -26,7 +28,8 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = $this->loggedin()->tickets;
+        //$tickets = $this->loggedin()->tickets;
+        $tickets = Ticket::where('user_id', $this->loggedin()->id)->where('archived', 0)->latest()->get();
         return view('pages.users.tickets.index', compact('tickets'));
     }
 
@@ -94,7 +97,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return view('pages.users.tickets.show', compact('ticket'));
     }
 
     /**
@@ -150,6 +153,44 @@ class TicketController extends Controller
                 
             }
         }
+    }
+
+    public function archived()
+    {
+        $tickets = Ticket::where('archived', 1)->latest()->get();
+        return view('pages.users.tickets.index', compact('tickets'));
+    }
+
+    public function reopen(Ticket $ticket)
+    {
+        $ticket->archived = 0;
+        $ticket->resolved = 0;
+        $ticket->reopened = $ticket->reopened + 1;
+        $ticket->save();
+
+        Activity::create([
+            'user_id' => $this->loggedin()->id,
+            'activity' => "Re-Opened a Ticket with code",
+        ]);
+
+        Mail::to("icthelpdesk@ncdmb.gov.ng")->cc($ticket->owner->email)->queue(new NewTicket($ticket));
+        flash()->success('Re-Opened!!!', 'Your ticket has been reopened and a staff would be with you shortly.');
+        return back();
+    }
+
+    public function reminder(Ticket $ticket)
+    {
+        $admin = Admin::where('name', $ticket->assigned_to)->firstOrFail();
+
+        Activity::create([
+            'user_id' => $this->loggedin()->id,
+            'activity' => "Sent A Ticket Reminder to " . $admin->name,
+        ]);
+
+        Mail::to("icthelpdesk@ncdmb.gov.ng")->cc($admin->email)->queue(new SendReminder($ticket));
+
+        flash()->success('Mail Sent!!', 'A reminder has been sent to the HelpDesk.');
+        return back();
     }
 
     /**

@@ -9,7 +9,16 @@
           <ul class="list-unstyled navbar__list">
               <li>
                   <a href="{{ route('tickets.index') }}">
-                      <i class="fas fa-chart-bar"></i>Tickets</a>
+                      <i class="fas fa-mail-reply-all"></i>Tickets</a>
+              </li>
+
+              <li>
+                  <a href="{{ route('tickets.closed') }}">
+                      <i class="fas fa-archive"></i>Closed Tickets</a>
+              </li>
+              <li>
+                  <a href="{{ route('trainings.index') }}">
+                      <i class="fas fa-briefcase"></i>Trainings</a>
               </li>
           </ul>
       </nav>
