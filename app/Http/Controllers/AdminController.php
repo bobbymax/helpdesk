@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use HelpDesk\Role;
 use HelpDesk\Avatar;
 use Image;
+use Storage;
 use DB;
 use Auth;
 

@@ -51,7 +51,7 @@ Route::prefix('admin')->group(function() {
 	Route::get('/tickets/{ticket}/update', 'AdminTicketController@update')->name('admin.ticket.update');
 
 	Route::get('/profile', 'AdminController@profileView')->name('view.profile');
-	Route::patch('/profile', 'AdminController@profileUpdate')->name('update.profile');
+	Route::post('/profile', 'AdminController@profileUpdate')->name('update.profile');
 
 	Route::get('/admins/display', 'AdminController@display')->name('admins.index');
 	Route::get('/admins/create', 'AdminController@create')->name('admins.create');
