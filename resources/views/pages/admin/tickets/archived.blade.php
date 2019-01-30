@@ -31,7 +31,7 @@
                     <tr>
                       <td>{{ strtoupper($ticket->ticket_code) }}</td>
                       <td>{{ $ticket->issue }}</td>
-                      <td>{{ $ticket->report->assigned_to === 'none' ? $ticket->assigned_to : $ticket->report->assigned_to }}</td>
+                      <td>{{ $ticket->report->last()->assigned_to === 'none' ? $ticket->assigned_to : $$ticket->report->last()->assigned_to }}</td>
                       <td>{{ $ticket->created_at->format('d M') }}</td>
                       <td>{{ $ticket->updated_at->format('d M') }}</td>
                     </tr>
