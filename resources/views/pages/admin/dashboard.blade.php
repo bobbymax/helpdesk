@@ -30,8 +30,8 @@
                   <tr>
                     <th scope="row">{{ $ticket->issue }}</th>
                     <td>{{ $ticket->owner->name }}</td>
-                    <td>{{ $ticket->location->name }}</td>
-                    <td><i class="fas fa-arrow-up text-success mr-3"></i> {{ $ticket->room_no }}</td>
+                    <td>{{ $ticket->owner->profile->location->name }}</td>
+                    <td><i class="fas fa-arrow-up text-success mr-3"></i> {{ $ticket->owner->profile->room_no }}</td>
                   </tr>                    
                 @endforeach
               @else

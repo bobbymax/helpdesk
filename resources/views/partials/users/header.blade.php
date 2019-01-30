@@ -9,6 +9,7 @@
                   </button>
               </form>
               <div class="header-button">
+                  {{--  
                   <div class="noti-wrap">
                       <div class="noti__item js-item-menu">
                           <i class="zmdi zmdi-comment-more"></i>
@@ -121,10 +122,11 @@
                           </div>
                       </div>
                   </div>
+                  --}}
                   <div class="account-wrap">
                       <div class="account-item clearfix js-item-menu">
                           <div class="image">
-                              <img src="/images/icon/avatar-01.jpg" alt="John Doe" />
+                              <img src="{{ Auth::user()->profile->avatar === null ? asset('images/icon/avatar_placeholder.png') : asset('/images/users/' . Auth::user()->profile->avatar) }}" alt="{{ Auth::user()->name . " image" }}" />
                           </div>
                           <div class="content">
                               <a class="js-acc-btn" href="#">{{ Auth::user()->name }}</a>
@@ -133,7 +135,7 @@
                               <div class="info clearfix">
                                   <div class="image">
                                       <a href="#">
-                                          <img src="/images/icon/avatar-01.jpg" alt="John Doe" />
+                                          <img src="{{ Auth::user()->profile->avatar === null ? asset('images/icon/avatar_placeholder.png') : asset('/images/users/' . Auth::user()->profile->avatar) }}" alt="John Doe" />
                                       </a>
                                   </div>
                                   <div class="content">
@@ -145,7 +147,7 @@
                               </div>
                               <div class="account-dropdown__body">
                                   <div class="account-dropdown__item">
-                                      <a href="#">
+                                      <a href="{{ route('user.profile') }}">
                                         <i class="zmdi zmdi-account"></i>Account
                                       </a>
                                   </div>

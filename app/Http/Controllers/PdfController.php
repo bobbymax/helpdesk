@@ -27,14 +27,16 @@ class PdfController extends Controller
                            ->latest()
                            ->get();
         $services = Service::latest()->get();
-        // Send data to the view using loadView function of PDF facade
-        $pdf = PDF::loadView('pages.admin.monthly.report', compact('projects', 'services'));
-        $pdf->setPaper('A4', 'landscape');
-        // If you want to store the generated pdf to the server then you can use the store function
-        //$pdf->save(public_path().'reports/_filename.pdf');
-        // Finally, you can download the file using download function
-        return $pdf->download('report.pdf');
+        
+        $pdf = PDF::loadView('pages.admin.monthly.report', compact('projects', 'services'))->setPaper('A4', 'landscape');
 
-        //return back();
+        return $this->downloadPDF($pdf, 'report.pdf');
     }
+
+    protected function downloadPDF($instance, $file)
+    {       
+        return $instance->download($file);
+    }
+
+
 }

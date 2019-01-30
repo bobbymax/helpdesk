@@ -29,13 +29,9 @@
                         <div class="media align-items-center">
                           <div class="media-body">
                             @if($ticket->priority === "high")
-                              <a href="#" onclick="return false;" class="btn btn-sm btn-danger">
-                                {{ $ticket->priority }}
-                              </a>
+                              <span class="badge badge-danger">{{ $ticket->priority }}</span>
                             @else
-                              <a href="#" onclick="return false;" class="btn btn-sm btn-primary">
-                                {{ $ticket->priority }}
-                              </a>
+                              <span class="badge badge-primary">{{ $ticket->priority }}</span>
                             @endif
                           </div>
                         </div>
@@ -45,13 +41,9 @@
                       <td>{{ $ticket->assigned_to !== null ? $ticket->assigned_to : 'Not Assigned' }}</td>
                       <td>
                         @if($ticket->resolved === 1)
-                          <a href="#" onclick="return false;" class="btn btn-sm btn-success">
-                            <i class="fas fa-check"></i>
-                          </a>
+                          <span class="badge badge-success">Resolved</span>
                         @else
-                          <a href="#" onclick="return false;" class="btn btn-sm btn-danger">
-                            <i class="fas fa-ban"></i>
-                          </a>
+                          <span class="badge badge-danger">Not Resolved</span>
                         @endif
                       </td>
                       <td>

@@ -7,7 +7,7 @@
   </div>
   <div class="col text-right">
     @can('generate-report')
-      <a href="{{ route('generate.report') }}" class="btn btn-sm btn-success">+ Generate Monthly Report</a>
+      <a href="{{ route('generate.report') }}" class="btn btn-sm btn-success" target="_blank">+ Generate Monthly Report</a>
     @endcan
   </div>
 </div>

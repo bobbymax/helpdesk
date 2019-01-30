@@ -11,10 +11,16 @@
 						<strong>Ticket</strong> Details
 					</div>
 					<div class="col-md-4">
-						@if($ticket->archived === 1)
+						@if($ticket->archived === 1 && $ticket->approved === 1)
 							<a href="{{ route('reopen.ticket', $ticket->id) }}" class="btn btn-danger btn-sm pull-right">
 								<i class="fas fa-gavel"></i> &nbsp;Re-Open Ticket
 							</a>
+						@elseif($ticket->archived === 0)
+							<a href="{{ route('user.close.ticket', $ticket->id) }}" class="btn btn-primary btn-sm pull-right">
+								<i class="fas fa-barcode"></i> &nbsp;Close Ticket
+							</a>
+						@else
+							<span class="badge badge-pill badge-primary">Awaiting Approval</span>
 						@endif
 					</div>
 				</div>

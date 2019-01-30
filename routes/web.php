@@ -7,10 +7,13 @@ Route::prefix('dashboard')->group(function() {
 	Route::resource('tickets', 'TicketController');
 	Route::resource('trainings', 'TrainingController');
 
+	Route::get('{ticket}/close/ticket', 'TicketController@close')->name('user.close.ticket');
 	Route::get('tickets/{ticket}/reminder', 'TicketController@reminder')->name('send.reminder');
 	Route::get('tickets/{ticket}/reopen', 'TicketController@reopen')->name('reopen.ticket');
 	Route::get('archived/tickets', 'TicketController@archived')->name('tickets.closed');
 	Route::post('/dependency/fetch', 'TicketController@fetch')->name('dependencies.fetch');
+	Route::get('/profile', 'HomeController@profile')->name('user.profile');
+	Route::post('/profile/avatar', 'HomeController@profileAvatar')->name('upload.profile.avatar');
 	Route::get('/', 'TicketController@index');
 });
 

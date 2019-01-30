@@ -11,6 +11,7 @@ use DB;
 use Mail;
 use HelpDesk\Mail\NewTicket;
 use HelpDesk\Mail\SendReminder;
+use HelpDesk\Mail\TicketClosed;
 use HelpDesk\Activity;
 use HelpDesk\Admin;
 
@@ -81,7 +82,7 @@ class TicketController extends Controller
         Mail::to("icthelpdesk@ncdmb.gov.ng")->cc($ticket->owner->email)->queue(new NewTicket($ticket));
 
         flash()->overlay('Thank You!!', 'An ICT staff would be with you shortly.');
-        return redirect()->route('user.dashboard');
+        return redirect()->route('tickets.index');
     }
 
     protected function loggedin()
@@ -109,6 +110,23 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         //
+    }
+
+    public function close(Ticket $ticket)
+    {
+        $ticket->archived = 1;
+        $ticket->save();
+
+        Activity::create([
+            'user_id' => $this->loggedin()->id,
+            'activity' => "Closed a Ticket",
+        ]);
+
+
+        Mail::to("icthelpdesk@ncdmb.gov.ng")->cc($ticket->owner->email)->queue(new TicketClosed($ticket));
+
+        flash()->success('Success!!', 'This ticket is now closed.');
+        return redirect()->route('tickets.index');
     }
 
     /**

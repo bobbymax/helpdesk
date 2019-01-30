@@ -95,7 +95,9 @@
 				<ul>
 					@foreach($services as $service)
 						@if($service->type->slug === "web-services")
-							<li>{{ $service->description }}</li>
+							@if($service->updated_at->format('M Y') === date('M Y'))
+								<li>{{ $service->description }}</li>
+							@endif
 						@endif
 					@endforeach
 				</ul>
@@ -110,7 +112,9 @@
 				<ul>
 					@foreach($services as $service)
 						@if($service->type->slug === "web-uploads")
-							<li>{{ $service->description }}</li>
+							@if($service->updated_at->format('M Y') === date('M Y'))
+								<li>{{ $service->description }}</li>
+							@endif
 						@endif
 					@endforeach
 				</ul>

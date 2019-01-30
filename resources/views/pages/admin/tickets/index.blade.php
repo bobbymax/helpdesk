@@ -22,7 +22,7 @@
                       <th>Priority</th>
                       <th>Staff</th>
                       <th>Issue</th>
-                      <th>Assigned To</th>
+                      <th>Assigned</th>
                       <th>Resolved</th>
                       <th></th>
                   </tr>
@@ -34,13 +34,9 @@
                         <div class="media align-items-center">
                           <div class="media-body">
                             @if($ticket->priority === "high")
-                              <a href="#" onclick="return false;" class="btn btn-sm btn-danger">
-                                {{ $ticket->priority }}
-                              </a>
+                              <span class="badge badge-danger">{{ $ticket->priority }}</span>
                             @else
-                              <a href="#" onclick="return false;" class="btn btn-sm btn-primary">
-                                {{ $ticket->priority }}
-                              </a>
+                              <span class="badge badge-primary">{{ $ticket->priority }}</span>
                             @endif
                           </div>
                         </div>
@@ -50,13 +46,9 @@
                       <td>{{ $ticket->assigned_to !== null ? $ticket->assigned_to : 'Not Assigned' }}</td>
                       <td>
                         @if($ticket->resolved === 1)
-                          <a href="#" onclick="return false;" class="btn btn-sm btn-success">
-                            <i class="fas fa-check"></i>
-                          </a>
+                          <span class="badge badge-success">resolved</span>
                         @else
-                          <a href="#" onclick="return false;" class="btn btn-sm btn-danger">
-                            <i class="fas fa-ban"></i>
-                          </a>
+                          <span class="badge badge-danger">not resolved</span>
                         @endif
                       </td>
                       <td>
@@ -65,9 +57,13 @@
                             <a class="btn btn-sm btn-primary" href="{{ route('admin.ticket.edit', $ticket->id) }}"><i class="fas fa-edit"></i></a>
                           @else
                             @if($ticket->report_generated !== 1)
-                              <a class="btn btn-sm btn-success" href="{{ route('ticket.report', $ticket->id) }}"><i class="fas fa-send"></i></a>
+                              @if(Auth::user()->name === $ticket->assigned_to)
+                                <a class="btn btn-sm btn-success" href="{{ route('ticket.report', $ticket->id) }}">Genereate Report</a>
+                              @else
+                                <span class="badge badge-info">Report Not Generated</span>
+                              @endif
                             @else
-                              <a class="btn btn-sm btn-primary" href="#" onclick="return false;"><i class="fas fa-send"></i> Awaiting Closure</a>
+                              <span class="badge badge-primary"><i class="fas fa-send"></i> Awaiting Approval</span>
                             @endif
                           @endif
                         @endcan

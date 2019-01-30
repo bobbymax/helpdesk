@@ -24,7 +24,7 @@ class AdminTicketController extends Controller
     public function index()
     {
         //dd('something');
-    	$tickets = Ticket::where('resolved', false)->latest()->get();
+    	$tickets = Ticket::where('archived', 0)->latest()->get();
     	return view('pages.admin.tickets.index', compact('tickets'));
     }
 
@@ -140,13 +140,13 @@ class AdminTicketController extends Controller
 
     public function approvals()
     {
-        $tickets = Ticket::where('report_generated', 1)->where('archived', 0)->latest()->get();
+        $tickets = Ticket::where('report_generated', '>=', 1)->where('archived', 1)->where('approved', 0)->latest()->get();
         return view('pages.admin.tickets.approvals', compact('tickets'));
     }
 
     public function close(Ticket $ticket)
     {
-        $ticket->archived = true;
+        $ticket->approved = 1;
         $ticket->save();
 
         flash()->success('Success!!', 'This ticket is now closed.');

@@ -6,7 +6,7 @@
 @endif
 
 
-A ticket with reference number {{ $ticket->ticket_code }} under request category {{ $ticket->service->name }} has been opened by {{ $ticket->owner->name }} located at {{ $ticket->owner->profile->location->name }} room {{ $ticket->owner->profile->room_no }} for the following issue:
+A ticket with reference number {{ strtoupper($ticket->ticket_code) }} under request category {{ $ticket->service->name }} has been opened by {{ $ticket->owner->name }} located at {{ $ticket->owner->profile->location->name }} room {{ $ticket->owner->profile->room_no }} for the following issue:
 
 * "{{ $ticket->issue }}"
 

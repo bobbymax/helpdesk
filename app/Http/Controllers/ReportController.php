@@ -9,6 +9,8 @@ use HelpDesk\Admin;
 use HelpDesk\Ticket;
 use Auth;
 use DB;
+use Mail;
+use HelpDesk\Mail\ReportGenerated;
 
 class ReportController extends Controller
 {
@@ -27,6 +29,7 @@ class ReportController extends Controller
         $currentMonth = date('m');
         $currentYear = date('Y');
         $tickets = Ticket::where('archived', 1)
+                           ->where('approved', 1)
                            ->whereIn(DB::raw('MONTH(created_at)'), [$currentMonth])
                            ->whereIn(DB::raw('YEAR(created_at)'), [$currentYear])
                            ->latest()
@@ -68,10 +71,12 @@ class ReportController extends Controller
         $this->adminLoggedIn()->reports()->save($report);
 
         if ($report) {
-            $ticket->report_generated = true;
-            $ticket->resolved = true;
+            $ticket->report_generated = 1;
+            $ticket->resolved = 1;
             $ticket->save();
         }
+
+        Mail::to($ticket->owner->email)->cc("icthelpdesk@ncdmb.gov.ng")->queue(new ReportGenerated($report));
 
         flash()->success('Success!!', 'Report for this ticket has been generated successfully');
 

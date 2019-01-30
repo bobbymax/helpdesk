@@ -68,7 +68,7 @@
 		                <label for="specification" class="form-control-label">Solution</label>
 		            </div>
 		            <div class="col-12 col-md-9">
-		                <textarea rows="4" class="form-control" disabled>{{ $ticket->report->description }}</textarea>
+		                <textarea rows="4" class="form-control" disabled>{{ $ticket->report->last()->description }}</textarea>
 		            </div>
 		        </div>
 
@@ -77,7 +77,7 @@
 		                <label for="specification" class="form-control-label">Resolved By</label>
 		            </div>
 		            <div class="col-12 col-md-9">
-		                <input type="text" value="{{ $ticket->report->assigned_to === 'none' ? $ticket->assigned_to : $ticket->report->assigned_to }}" class="form-control" disabled>
+		                <input type="text" value="{{ $ticket->report->last()->assigned_to === 'none' ? $ticket->assigned_to : $ticket->report->last()->assigned_to }}" class="form-control" disabled>
 		            </div>
 		        </div>
 
