@@ -65,6 +65,15 @@
 
 		        <div class="row form-group">
 		            <div class="col col-md-3">
+		                <label for="issues" class="form-control-label">Created At</label>
+		            </div>
+		            <div class="col-12 col-md-9">
+		                <input type="text" value="{{ $ticket->created_at->format('d M, Y  H:m:s') }}" class="form-control" disabled>
+		            </div>
+		        </div>
+
+		        <div class="row form-group">
+		            <div class="col col-md-3">
 		                <label for="specification" class="form-control-label">Solution</label>
 		            </div>
 		            <div class="col-12 col-md-9">
@@ -78,6 +87,14 @@
 		            </div>
 		            <div class="col-12 col-md-9">
 		                <input type="text" value="{{ $ticket->report->last()->assigned_to === 'none' ? $ticket->assigned_to : $ticket->report->last()->assigned_to }}" class="form-control" disabled>
+		            </div>
+		        </div>
+		        <div class="row form-group">
+		            <div class="col col-md-3">
+		                <label for="issues" class="form-control-label">Resolved At</label>
+		            </div>
+		            <div class="col-12 col-md-9">
+		                <input type="text" value="{{ $ticket->updated_at->format('d M, Y  H:m:s') }}" class="form-control" disabled>
 		            </div>
 		        </div>
 

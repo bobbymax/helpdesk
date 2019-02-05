@@ -19,8 +19,8 @@
                   <tr>
                       <th>Issue</th>
                       <th>Assigned To</th>
-                      <th>Resolved</th>
-                      <th></th>
+                      <th>Status</th>
+                      <th>Action</th>
                   </tr>
               </thead>
               <tbody>

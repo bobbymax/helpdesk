@@ -32,6 +32,9 @@ Route::prefix('admin')->group(function() {
 	Route::resource('permissions', 'PermissionController');
 	Route::resource('menus', 'MenuController');
 	Route::resource('subCategories', 'SubCategoryController');
+	Route::resource('brands', 'BrandController');
+	Route::resource('inventories', 'InventoryController');
+	Route::resource('items', 'ItemController');
 
 	Route::get('generate/report', 'PdfController@generateReport')->name('generate.report');
 	Route::get('trainings', 'AdminTrainingController@index')->name('admin.trainings.index');
@@ -77,6 +80,7 @@ Route::prefix('admin')->group(function() {
 	Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 	Route::get('/', 'AdminController@index')->name('admin.dashboard');
 	Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+
 });
 
 

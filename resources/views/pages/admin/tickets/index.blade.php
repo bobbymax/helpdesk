@@ -22,9 +22,9 @@
                       <th>Priority</th>
                       <th>Staff</th>
                       <th>Issue</th>
-                      <th>Assigned</th>
-                      <th>Resolved</th>
-                      <th></th>
+                      <th>Assigned To</th>
+                      <th>Status</th>
+                      <th>Action</th>
                   </tr>
               </thead>
               <tbody>
